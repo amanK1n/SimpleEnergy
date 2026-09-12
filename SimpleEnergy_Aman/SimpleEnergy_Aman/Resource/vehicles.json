@@ -23,7 +23,7 @@
  },
  {
    "id": 3,
-   "name": "Simple OneS-Local",
+   "name": "Simple OneS",
    "model": "3.7 kWh",
    "battery": 90,
    "range": 190,

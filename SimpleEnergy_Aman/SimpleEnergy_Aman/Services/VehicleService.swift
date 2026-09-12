@@ -8,7 +8,7 @@
 import Foundation
 
 enum APIConfig {
-    static let vehiclesURL = URL(string: "https://raw.githubusercontent.com/amanK1n/SimpleEnergy/main/vehicles.json")!
+    static let vehiclesURL = URL(string: "https://raw.githubusercontent.com/amanK1n/SimpleEnergy/main/SimpleEnergy_Aman/SimpleEnergy_Aman/Resource/vehicles.json")!
 }
 
 enum VehicleError: LocalizedError {
