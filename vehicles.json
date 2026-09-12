@@ -14,7 +14,7 @@
    "id": 2,
    "name": "Simple Ultra",
    "model": "6.5 kWh",
-   "battery": 80,
+   "battery": 12,
    "range": 400,
    "speed": 115,
    "odometer": 5400,
