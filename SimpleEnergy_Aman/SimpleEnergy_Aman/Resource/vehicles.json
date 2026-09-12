@@ -14,7 +14,7 @@
    "id": 2,
    "name": "Simple Ultra",
    "model": "6.5 kWh",
-   "battery": 12,
+   "battery": 80,
    "range": 400,
    "speed": 115,
    "odometer": 5400,
@@ -23,7 +23,7 @@
  },
  {
    "id": 3,
-   "name": "Simple OneS",
+   "name": "Simple OneS-Local",
    "model": "3.7 kWh",
    "battery": 90,
    "range": 190,
