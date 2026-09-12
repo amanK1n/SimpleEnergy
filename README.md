@@ -10,9 +10,10 @@ A small iOS app that displays a list of vehicles and their details, built with S
 ## How to Run
 
 1. Clone the repository
-2. Open `SimpleEnergy_Aman.xcodeproj` in Xcode
-3. Select an iPhone simulator
-4. Press **Cmd + R** to build and run
+2. Go to inside directory 'SimpleEnergy_Aman'
+3. Open `SimpleEnergy_Aman.xcodeproj` in Xcode
+4. Select an iPhone simulator
+5. Press **Cmd + R** to build and run
 
 ## Features
 
