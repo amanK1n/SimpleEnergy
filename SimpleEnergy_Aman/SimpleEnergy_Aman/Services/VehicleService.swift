@@ -66,7 +66,6 @@ final class VehicleService: VehicleServiceProtocol {
               (200...299).contains(http.statusCode) else {
             throw VehicleError.invalidResponse
         }
-        print("Fetched data")
         return try decodeVehicles(from: data)
     }
 
