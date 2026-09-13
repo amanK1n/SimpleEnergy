@@ -21,13 +21,27 @@ A small iOS app that displays a list of vehicles and their details, built with S
 - **Vehicle Details** – Shows full vehicle info including speed, odometer, connectivity status, and last updated time
 - **Pull to Refresh** – Reload latest data on the detail screen
 
+## Architecture
+
+The app follows **MVVM** (Model–View–ViewModel):
+
+- **Model** – `Vehicle` data type
+- **View** – SwiftUI screens (`VehicleListView`, `VehicleDetailView`, `VehicleRowView`)
+- **ViewModel** – `VehicleListViewModel`, `VehicleDetailViewModel` (state, loading, errors, refresh)
+- **Service** – `VehicleService` fetches data via `VehicleServiceProtocol`
+
+Views bind to ViewModels with `@StateObject`. ViewModels call the service layer; views do not fetch data directly.
+
 ## Data Source
 
 The app fetches vehicle data from a REST API:
 https://raw.githubusercontent.com/amanK1n/SimpleEnergy/main/SimpleEnergy_Aman/SimpleEnergy_Aman/Resource/vehicles.json
+
 If the network request fails, it falls back to a local `vehicles.json` bundled in the app.
 
 ## Project Structure
+
+```
 SimpleEnergy_Aman/
 ├── SimpleEnergy_Aman.xcodeproj/
 │   ├── project.pbxproj
@@ -45,7 +59,8 @@ SimpleEnergy_Aman/
     │   └── VehicleService.swift
     │
     ├── ViewModel/
-    │   └── VehicleListViewModel.swift
+    │   ├── VehicleListViewModel.swift
+    │   └── VehicleDetailViewModel.swift
     │
     ├── Views/
     │   ├── VehicleListView.swift
@@ -59,6 +74,7 @@ SimpleEnergy_Aman/
         ├── AccentColor.colorset/
         ├── AppIcon.appiconset/
         └── Contents.json
+```
 
 ## Assumptions
 
