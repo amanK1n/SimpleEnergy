@@ -9,48 +9,43 @@ import Foundation
 import SwiftUI
 
 struct VehicleDetailView: View {
-    @State var vehicle: Vehicle
-    @State private var isRefreshing = false
-    @State private var errorMessage: String?
-    private let service: VehicleServiceProtocol
-    
+    @StateObject private var viewModel: VehicleDetailViewModel
+
     init(vehicle: Vehicle, service: VehicleServiceProtocol = VehicleService()) {
-        _vehicle = State(initialValue: vehicle)
-        self.service = service
+        _viewModel = StateObject(wrappedValue: VehicleDetailViewModel(vehicle: vehicle, service: service))
     }
-    
-    
+
     var body: some View {
         ScrollView {
             headerSection
             statsGrid
             lastUpdatedSection
-        }.navigationTitle(vehicle.name)
+        }.navigationTitle(viewModel.vehicle.name)
             .navigationBarTitleDisplayMode(.inline)
-            .refreshable { await refresh() }
+            .refreshable { await viewModel.refresh() }
     }
-    
+
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(vehicle.model)
+            Text(viewModel.vehicle.model)
                 .font(.title2)
                 .foregroundStyle(.secondary)
-            Text(vehicle.status)
+            Text(viewModel.vehicle.status)
                 .font(.caption)
                 .fontWeight(.semibold)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                .background(vehicle.statusColor.opacity(0.15))
-                .foregroundStyle(vehicle.statusColor)
+                .background(viewModel.vehicle.statusColor.opacity(0.15))
+                .foregroundStyle(viewModel.vehicle.statusColor)
                 .clipShape(Capsule())
         }
     }
     private var statsGrid: some View {
            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
-               statCard(title: "Battery", value: "\(vehicle.battery)%", icon: "battery.100", color: vehicle.batteryColor)
-               statCard(title: "Range", value: "\(vehicle.range) km", icon: "road.lanes", color: .blue)
-               statCard(title: "Speed", value: "\(vehicle.speed) km/h", icon: "speedometer", color: .orange)
-               statCard(title: "Odometer", value: "\(vehicle.odometer) km", icon: "gauge.with.dots.needle.67percent", color: .purple)
+               statCard(title: "Battery", value: "\(viewModel.vehicle.battery)%", icon: "battery.100", color: viewModel.vehicle.batteryColor)
+               statCard(title: "Range", value: "\(viewModel.vehicle.range) km", icon: "road.lanes", color: .blue)
+               statCard(title: "Speed", value: "\(viewModel.vehicle.speed) km/h", icon: "speedometer", color: .orange)
+               statCard(title: "Odometer", value: "\(viewModel.vehicle.odometer) km", icon: "gauge.with.dots.needle.67percent", color: .purple)
            }
        }
        private func statCard(title: String, value: String, icon: String, color: Color) -> some View {
@@ -78,22 +73,6 @@ struct VehicleDetailView: View {
            }
        }
     private var formattedDate: String {
-          vehicle.lastUpdated.formatted(date: .abbreviated, time: .shortened)
+          viewModel.vehicle.lastUpdated.formatted(date: .abbreviated, time: .shortened)
       }
-    private func refresh() async {
-        isRefreshing = true
-        errorMessage = nil
-        defer { isRefreshing = false }
-
-        do {
-            let vehicles = try await service.fetchVehicles()
-            if let updated = vehicles.first(where: { $0.id == vehicle.id }) {
-                vehicle = updated
-            } else {
-                errorMessage = "Vehicle not found"
-            }
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
 }
